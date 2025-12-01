@@ -3,7 +3,7 @@
 #include <iostream>
 
 namespace Renderer {
-	ShaderProgram::ShaderProgram(const std::string& vertexShader, const std::string fragmentShader) {
+	ShaderProgram::ShaderProgram(const std::string& vertexShader, const std::string& fragmentShader) {
 
 		GLuint vertexShaderID;
 		if (!createShader(vertexShader,GL_VERTEX_SHADER, vertexShaderID))
@@ -29,34 +29,37 @@ namespace Renderer {
 		if (!success)
 		{
 			GLchar infoLog[1024];
-			glGetShaderInfoLog(m_ID, 1024, nullptr, infoLog);//тут записываем ошибку и количество памяти выделяемое на неё
+			glGetProgramInfoLog(m_ID, 1024, nullptr, infoLog);
 			std::cerr << "ERROR::SHADER:Link-time-error:\n" << infoLog << std::endl;
 		}
 		else
 		{
 			m_isCompiled = true;
 		}
+
 		glDeleteShader(vertexShaderID);
 		glDeleteShader(fragmentShaderID);
 	}
 
-	bool ShaderProgram::createShader(const std::string& source, const GLenum shaderType, GLuint& shaderID) {
-		shaderID = glCreateShader(shaderType);
-		const char* code = source.c_str();
-		glShaderSource(shaderID, 1, &code, nullptr);
-		glCompileShader(shaderID);
+bool ShaderProgram::createShader(const std::string& source, const GLenum shaderType, GLuint& shaderID) {
+    shaderID = glCreateShader(shaderType);
+    const char* code = source.c_str();
+    glShaderSource(shaderID, 1, &code, nullptr);
+    glCompileShader(shaderID);
 
-		GLint success;
-		glGetShaderiv(shaderID, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
-			GLchar infoLog[1024];
-			glGetShaderInfoLog(shaderID, 1024, nullptr, infoLog);//тут записываем ошибку и количество памяти выделяемое на неё
-			std::cerr << "ERROR::SHADER:Compile-time-error:\n" << infoLog << std::endl;
-			return false;
-		}
-		return true;
-	}
+    GLint success;
+    glGetShaderiv(shaderID, GL_COMPILE_STATUS, &success);
+    if (!success)
+    {
+        GLchar infoLog[1024];
+        glGetShaderInfoLog(shaderID, 1024, nullptr, infoLog);
+        std::cerr << "ERROR::SHADER:Compile-time-error:\n" << infoLog << std::endl;
+        return false;
+    }
+    return true;
+}
+
+
 
 	void ShaderProgram::use() const {
 		glUseProgram(m_ID);
