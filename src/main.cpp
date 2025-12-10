@@ -4,7 +4,9 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <vector>
 #include <iostream>
+
 #include "Renderer/ShaderProgram.h"
 #include "Resources/ResourceManager.h"
 #include "Renderer/Texture2D.h"
@@ -106,7 +108,10 @@ int main(int argc, char ** argv)
 
         auto tex = resourceManager.loadTexture("DefaultTexture", "res/textures/map_16x16.png");
 
-        auto pSprite = resourceManager.loadSprite("NewSprite", "DefaultTexture", "SpriteShader", 100, 100);
+
+        std::vector<std::string> subTexturesNames = { "block","topBlock","bottomoBlock", "leftBlock","rightBlock", "topLeftBlock","topRightBlock","bottomLeftBlock", "bottomRightBlock","beton" };
+        auto pTextureAtlas = resourceManager.loadTextureAtlas("DefaultTextureAtlas", "res/textures/map_16x16.png", std::move(subTexturesNames), 16, 16);
+        auto pSprite = resourceManager.loadSprite("NewSprite", "DefaultTextureAtlas", "SpriteShader", 100, 100, "beton");
         pSprite->setPosition(glm::vec2(300, 100));
 
         GLuint points_vbo = 0;
