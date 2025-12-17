@@ -1,4 +1,4 @@
-#include "Game.h"
+﻿#include "Game.h"
 
 #include "../Renderer/ShaderProgram.h"
 #include "../Resources/ResourceManager.h"
@@ -82,7 +82,7 @@ bool Game::init()
 
 
     auto pSpriteShaderProgram = ResourceManager::loadShaders("SpriteShader", "res/shaders/vSprite.txt", "res/shaders/fSprite.txt");
-    if (!pDefaultShaderProgram)
+    if (!pSpriteShaderProgram)
     {
         std::cerr << "Can't create shader program: " << "SpriteShader" << std::endl;
         return false;
@@ -184,7 +184,7 @@ bool Game::init()
         "tankRight1",
         "tankRight2",
     };
-    auto pTanksTextureAtlas = ResourceManager::loadTextureAtlas("TanksTextureAtlas", "res/textures/tanks.png", std::move(tanksSubTexturesNames), 15, 15);
+    auto pTanksTextureAtlas = ResourceManager::loadTextureAtlas("TanksTextureAtlas", "res/textures/tanks.png", std::move(tanksSubTexturesNames), 16, 16);
     auto pTanksAnimatedSprite = ResourceManager::loadAnimatedSprite("TanksAnimatedSprite", "TanksTextureAtlas", "SpriteShader", 100, 100, "tankTop1");
 
     std::vector<std::pair<std::string, uint64_t>> tankTopState;
@@ -208,7 +208,7 @@ bool Game::init()
     pTanksAnimatedSprite->intertState("tankRightState", std::move(tankRightState));
     pTanksAnimatedSprite->intertState("tankLeftState", std::move(tankLeftState));
 
-    pTanksAnimatedSprite->setState("TankTopState");
+    pTanksAnimatedSprite->setState("tankTopState");
 
     m_pTank = std::make_unique<Tank>(pTanksAnimatedSprite, 0.0000001f, glm::vec2(100.f, 100.f));
 

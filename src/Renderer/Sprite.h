@@ -1,9 +1,12 @@
 #pragma once
+#include"../Renderer/VertexBuffer.h"
+#include"../Renderer/IndexBuffer.h"
 
 #include <glad/glad.h>
 #include <glm/vec2.hpp>
 #include <memory>
 #include <string>
+
 
 namespace Renderer {
 	class Texture2D;
@@ -33,7 +36,9 @@ namespace Renderer {
 		glm::vec2 m_size{};
 		float m_rotation;
 		GLuint m_VAO;
-		GLuint m_vertexCoordsVBO;
-		GLuint m_textureCoordsVBO;
+
+		VertexBuffer m_vertexCoordsBuffer;
+		VertexBuffer m_textureCoordsBuffer;
+		IndexBuffer  m_indexBuffer;
 	};
 }
