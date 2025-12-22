@@ -3,7 +3,7 @@
 #include <vector>
 #include "Sprite.h"
 
-namespace Renderer {
+namespace RenderEngine {
 	class Texture2D;
 	class ShaderProgram;
 	class AnimatedSprite : public Sprite{
