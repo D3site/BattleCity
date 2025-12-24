@@ -59,7 +59,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 )
 
 include_directories(external/glm)
-
+include_directories(external/rapidjson/include)
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     ${CMAKE_SOURCE_DIR}/res 
